@@ -12,14 +12,14 @@
         <activity android:name=".Java.ReceiveMessageActivity"/>
         <activity android:name=".Kotlin.ReceiveMessageActivity" />
         <activity android:name=".Kotlin.CreateMessageActivity" >
-
-        </activity>
-        <activity android:name=".Java.CreateMessageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".Java.CreateMessageActivity">
+
         </activity>
     </application>
 

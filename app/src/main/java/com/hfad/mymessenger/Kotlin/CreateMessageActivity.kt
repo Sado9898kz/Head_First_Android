@@ -11,7 +11,7 @@ class CreateMessageActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_receive_message)
+        setContentView(R.layout.activity_create_message)
     }
 
     //Вызвать onSendMessage() при щелчке на кнопке
@@ -20,6 +20,8 @@ class CreateMessageActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plane"
         intent.putExtra(Intent.EXTRA_TEXT, messageText)
-        startActivity(intent)
+        val chooserTitle = getString(R.string.chooser)
+        val chooserIntent = Intent.createChooser(intent, chooserTitle)
+        startActivity(chooserIntent)
     }
 }
