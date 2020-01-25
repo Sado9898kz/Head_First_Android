@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 import com.hfad.mymessenger.R;
 
@@ -18,7 +19,10 @@ public class CreateMessageActivity extends AppCompatActivity {
 
     //Вызвать onSendMessage() при щелчке на кнопке
     public void onSendMessage(View view) {
+        EditText messageView = (EditText) findViewById(R.id.et_message);
+        String messageText = messageView.getText().toString();
         Intent intent = new Intent(this, ReceiveMessageActivity.class);
+        intent.putExtra(ReceiveMessageActivity.EXTRA_MESSAGE, messageText);
         startActivity(intent);
     }
 }
