@@ -17,8 +17,9 @@ class CreateMessageActivity : AppCompatActivity() {
     //Вызвать onSendMessage() при щелчке на кнопке
     fun onSendMessage(view: View) {
         val messageText = et_message.text.toString()
-        val intent = Intent(this,ReceiveMessageActivity::class.java)
-        intent.putExtra(ReceiveMessageActivity().EXTRA_MESSAGE,messageText)
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plane"
+        intent.putExtra(Intent.EXTRA_TEXT, messageText)
         startActivity(intent)
     }
 }
