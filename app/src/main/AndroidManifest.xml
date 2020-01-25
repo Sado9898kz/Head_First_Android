@@ -9,9 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Java.ReceiveMessageActivity"></activity>
+        <activity android:name=".Java.ReceiveMessageActivity"/>
         <activity android:name=".Kotlin.ReceiveMessageActivity" />
-        <activity android:name=".Kotlin.CreateMessageActivity" />
+        <activity android:name=".Kotlin.CreateMessageActivity" >
+
+        </activity>
         <activity android:name=".Java.CreateMessageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
