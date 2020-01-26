@@ -13,6 +13,7 @@ class StopwatchActivity : AppCompatActivity() {
     private var seconds = 0
     //Секундмер работает?
     private var running = false
+    private var wasRunning = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +21,7 @@ class StopwatchActivity : AppCompatActivity() {
         if (savedInstanceState != null) {
             seconds = savedInstanceState.getInt("seconds")
             running = savedInstanceState.getBoolean("running")
+            wasRunning = savedInstanceState.getBoolean("wasRunning")
         }
 
         runTimer()
@@ -29,6 +31,20 @@ class StopwatchActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         outState.putInt("seconds", seconds)
         outState.putBoolean("running", running)
+        outState.putBoolean("wasRunning", wasRunning)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        wasRunning = running
+        running = false
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (wasRunning) {
+            running = true
+        }
     }
 
     //Запустите секундомер при нажатии кнопки «Страт»
