@@ -1,5 +1,6 @@
 package com.hfad.stopwatch.Java;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -21,7 +22,19 @@ public class StopwatchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sotpwatch);
+        if (savedInstanceState != null) {
+            seconds = savedInstanceState.getInt("seconds");
+            running = savedInstanceState.getBoolean("running");
+        }
+
         runTimer();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("seconds", seconds);
+        outState.putBoolean("running", running);
     }
 
     //Запустите секундомер при нажатии кнопки «Старт».
@@ -54,7 +67,7 @@ public class StopwatchActivity extends AppCompatActivity {
                         "%d:%02d:%02d", hours, minutes, secs);
                 timeView.setText(time);
                 if (running) {
-                    seconds++;
+                    seconds += 1;
                 }
                 handler.postDelayed(this, 1000);
             }

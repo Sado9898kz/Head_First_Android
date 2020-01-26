@@ -17,7 +17,18 @@ class StopwatchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sotpwatch)
+        if (savedInstanceState != null) {
+            seconds = savedInstanceState.getInt("seconds")
+            running = savedInstanceState.getBoolean("running")
+        }
+
         runTimer()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("seconds", seconds)
+        outState.putBoolean("running", running)
     }
 
     //Запустите секундомер при нажатии кнопки «Страт»
