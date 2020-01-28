@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">My Constraint Layout</string>
+    <string name="to_label">Для</string>
+    <string name="email_hint">Введите адрес электронной почты</string>
+    <string name="subject_hint">Предмет</string>
+    <string name="message_hint">Сообщение</string>
+    <string name="send_button">Отправить</string>
+</resources>
