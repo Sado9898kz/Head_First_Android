@@ -3,7 +3,7 @@ package com.hfad.starbuzz.Kotlin
 import com.hfad.starbuzz.R
 
 class Drink
-private constructor(private val name: String, val description: String, val imageResourceId: Int) {
+private constructor(val name: String, val description: String, val imageResourceId: Int) {
 
     override fun toString(): String {
         return name

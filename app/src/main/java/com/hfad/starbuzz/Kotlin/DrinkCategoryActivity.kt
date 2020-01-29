@@ -20,7 +20,7 @@ class DrinkCategoryActivity : AppCompatActivity() {
         listDrinks.setOnItemClickListener { _, _, _, id ->
             //Передача напитка, выбранного пользователем, DrinkActivity
             val intent = Intent(this@DrinkCategoryActivity, DrinkActivity::class.java)
-            intent.putExtra(DrinkActivity.EXTRA_DRINKID, id.toInt())
+            intent.putExtra(DrinkActivity().EXTRA_DRINKID, id.toInt())
             startActivity(intent)
         }
     }
