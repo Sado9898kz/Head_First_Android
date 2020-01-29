@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Java.TopLevelActibity"></activity>
+        <activity android:name=".Kotlin.MainActivity"></activity>
+        <activity android:name=".Java.MainActivity" />
+        <activity android:name=".Java.DrinkCategoryActivity" />
+        <activity android:name=".Kotlin.DrinkCategoryActivity" />
+        <activity android:name=".Java.TopLevelActivity" />
         <activity android:name=".Kotlin.TopLevelActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
