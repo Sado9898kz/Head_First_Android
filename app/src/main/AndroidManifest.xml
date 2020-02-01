@@ -11,7 +11,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Kotlin.DetailActivity"></activity>
         <activity android:name=".Java.DetailActivity" />
-        <activity android:name=".Kotlin.MainActivity" />
+        <activity android:name=".Kotlin.MainActivity" >
+
+        </activity>
         <activity android:name=".Java.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
