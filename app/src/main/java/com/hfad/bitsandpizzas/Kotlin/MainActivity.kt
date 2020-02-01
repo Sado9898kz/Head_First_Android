@@ -5,11 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.widget.ShareActionProvider
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.MenuItemCompat
 import com.hfad.bitsandpizzas.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var sharedActionProvider: ShareActionProvider
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +25,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         //Заполнение меню; элементы действий добавляются на панель приложения
         menuInflater.inflate(R.menu.menu_main, menu)
+        val menuItem = menu!!.findItem(R.id.action_share)
+        sharedActionProvider = MenuItemCompat.getActionProvider(menuItem) as ShareActionProvider
+        setShareActionProvider("Хотите присоединиться ко мне для пиццы?")
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun setShareActionProvider(text: String) {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_TEXT, text)
+        sharedActionProvider.setShareIntent(intent)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
