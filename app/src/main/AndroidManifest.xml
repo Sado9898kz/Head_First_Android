@@ -11,10 +11,20 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Kotlin.OrderActivity"
-            android:label="@string/create_order"/>
+            android:label="@string/create_order"
+            android:parentActivityName=".Kotlin.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Kotlin.MainActivity" />
+        </activity>
         <activity
             android:name=".Java.OrderActivity"
-            android:label="@string/create_order"/>
+            android:label="@string/create_order"
+            android:parentActivityName=".Java.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Java.MainActivity"/>
+        </activity>
         <activity android:name=".Kotlin.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
