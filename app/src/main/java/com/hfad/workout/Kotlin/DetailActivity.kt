@@ -6,10 +6,13 @@ import com.hfad.workout.R
 
 class DetailActivity : AppCompatActivity() {
 
+    val EXTRA_WORKOUT_ID = "id"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
         val frag = supportFragmentManager.findFragmentById(R.id.detail_frag) as WorkoutDetailFragment
-        frag.setWorkout(1)
+        val workoutId = intent.extras!![EXTRA_WORKOUT_ID] as Long
+        frag.setWorkout(workoutId)
     }
 }
