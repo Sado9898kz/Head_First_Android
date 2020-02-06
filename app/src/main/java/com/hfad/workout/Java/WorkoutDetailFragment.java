@@ -3,6 +3,8 @@ package com.hfad.workout.Java;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -18,8 +20,12 @@ import com.hfad.workout.R;
 public class WorkoutDetailFragment extends Fragment {
     private long workoutId;
 
-    public WorkoutDetailFragment() {
-        // Требуется пустой публичный конструктор
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            workoutId = savedInstanceState.getLong("workoutId");
+        }
     }
 
     @Override
@@ -40,6 +46,11 @@ public class WorkoutDetailFragment extends Fragment {
             TextView description = (TextView) view.findViewById(R.id.textDescription);
             description.setText(workout.getDescription());
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putLong("workoutId", workoutId);
     }
 
     public void setWorkout(long id) {
