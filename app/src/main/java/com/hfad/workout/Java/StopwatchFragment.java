@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.hfad.workout.R;
@@ -22,7 +23,7 @@ import java.util.Locale;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class StopwatchFragment extends Fragment {
+public class StopwatchFragment extends Fragment implements View.OnClickListener {
     //Количество секунд на секундомере.
     private int seconds = 0;
     //Секундомер работает?
@@ -44,7 +45,28 @@ public class StopwatchFragment extends Fragment {
                              Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_stopwatch, container, false);
         runTimer(layout);
+        Button startButton = layout.findViewById(R.id.start_button);
+        startButton.setOnClickListener(this);
+        Button stopButton = layout.findViewById(R.id.stop_button);
+        stopButton.setOnClickListener(this);
+        Button resetButton = layout.findViewById(R.id.reset_button);
+        resetButton.setOnClickListener(this);
         return layout;
+    }
+
+    @Override
+    public void onClick(@NotNull View v) {
+        switch (v.getId()) {
+            case R.id.start_button:
+                onClickStart();
+                break;
+            case R.id.stop_button:
+                onClickStop();
+                break;
+            case R.id.reset_button:
+                onClickReset();
+                break;
+        }
     }
 
     @Override
@@ -69,15 +91,15 @@ public class StopwatchFragment extends Fragment {
         outState.putBoolean("wasRunning", wasRunning);
     }
 
-    public void onClickStart(View view) {
+    private void onClickStart() {
         running = true;
     }
 
-    public void onClickStop(View view) {
+    private void onClickStop() {
         running = false;
     }
 
-    public void onClickReset(View view) {
+    private void onClickReset() {
         running = false;
         seconds = 0;
     }

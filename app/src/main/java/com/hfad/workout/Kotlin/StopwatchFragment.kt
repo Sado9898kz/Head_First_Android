@@ -6,6 +6,7 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.hfad.workout.R
@@ -15,7 +16,7 @@ import java.util.*
 /**
  * A simple [Fragment] subclass.
  */
-class StopwatchFragment : Fragment() {
+class StopwatchFragment : Fragment(), View.OnClickListener {
     //Количество секунд на секундомере.
     private var seconds = 0
     //Секундомер работает?
@@ -35,7 +36,21 @@ class StopwatchFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val layout = inflater.inflate(R.layout.fragment_stopwatch, container, false)
         runTimer(layout)
+        val startButton = layout.findViewById<Button>(R.id.start_button)
+        startButton.setOnClickListener(this)
+        val stopButton = layout.findViewById<Button>(R.id.stop_button)
+        stopButton.setOnClickListener(this)
+        val resetButton = layout.findViewById<Button>(R.id.reset_button)
+        resetButton.setOnClickListener(this)
         return layout
+    }
+
+    override fun onClick(v: View?) {
+        when (v!!.id) {
+            R.id.start_button -> onClickStart()
+            R.id.stop_button -> onClickStop()
+            R.id.reset_button -> onClickReset()
+        }
     }
 
     override fun onPause() {
@@ -57,15 +72,15 @@ class StopwatchFragment : Fragment() {
         outState.putBoolean("wasRunning", wasRunning)
     }
 
-    fun onClickStart(view: View?) {
+    private fun onClickStart() {
         running = true
     }
 
-    fun onClickStop(view: View?) {
+    private fun onClickStop() {
         running = false
     }
 
-    fun onClickReset(view: View?) {
+    private fun onClickReset() {
         running = false
         seconds = 0
     }
