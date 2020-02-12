@@ -2,6 +2,8 @@
     <string name="app_name">Bits and Pizzas</string>
     <string name="create_order">Create Order</string>
     <string name="create_order_title">Create Order</string>
+    <string name="order_name_hint">Please enter you name</string>
+    <string name="order_details_hint">Please enter your order</string>
     <string name="home_tab">Home</string>
     <string name="pizza_tab">Pizzas</string>
     <string name="pasta_tab">Pasta</string>
