@@ -1,6 +1,7 @@
 package com.hfad.bitsandpizzas.Java;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.ShareActionProvider;
 import androidx.appcompat.widget.Toolbar;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.material.tabs.TabLayout;
 import com.hfad.bitsandpizzas.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
         SectionsPagerAdapter pagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(pagerAdapter);
+
+        //Связывание ViewPager с TabLayout
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(pager);
     }
 
     @Override
@@ -85,6 +91,22 @@ public class MainActivity extends AppCompatActivity {
                     return new PastaFragment();
                 case 3:
                     return new StoresFragment();
+            }
+            return null;
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return getResources().getText(R.string.home_tab);
+                case 1:
+                    return getResources().getText(R.string.pizza_tab);
+                case 2:
+                    return getResources().getText(R.string.pasta_tab);
+                case 3:
+                    return getResources().getText(R.string.store_tab);
             }
             return null;
         }

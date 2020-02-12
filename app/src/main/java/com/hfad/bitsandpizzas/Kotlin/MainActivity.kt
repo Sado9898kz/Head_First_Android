@@ -1,5 +1,6 @@
 package com.hfad.bitsandpizzas.Kotlin
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +12,7 @@ import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
 import com.hfad.bitsandpizzas.R
 import kotlinx.android.synthetic.main.activity_main.*
 import androidx.fragment.app.FragmentPagerAdapter as FragmentPagerAdapter1
@@ -26,9 +28,13 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         //Связывание SectionsPagerAdapter c ViewPager
-        val pagerAdapter = SectionsPagerAdapter(supportFragmentManager)
+        val pagerAdapter = SectionsPagerAdapter(supportFragmentManager, this)
         val pager = findViewById<ViewPager>(R.id.pager)
         pager.adapter = pagerAdapter
+
+        //Связывание ViewPager с TabLayout
+        val tabLayout = findViewById<TabLayout>(R.id.tabs)
+        tabLayout.setupWithViewPager(pager)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -58,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         sharedActionProvider.setShareIntent(intent)
     }
 
-    class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter1(fm) {
+    class SectionsPagerAdapter(fm: FragmentManager, private val context: Context) : FragmentPagerAdapter1(fm) {
         override fun getCount(): Int {
             return 4
         }
@@ -69,6 +75,14 @@ class MainActivity : AppCompatActivity() {
             2 -> PastaFragment()
             3 -> StoresFragment()
             else -> Fragment()
+        }
+
+        override fun getPageTitle(position: Int): CharSequence? = when (position) {
+            0 -> context.getString(R.string.home_tab)
+            1 -> context.getString(R.string.pizza_tab)
+            2 -> context.getString(R.string.pasta_tab)
+            3 -> context.getString(R.string.store_tab)
+            else -> null
         }
     }
 }
