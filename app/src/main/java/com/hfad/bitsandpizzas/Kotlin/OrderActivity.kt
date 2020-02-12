@@ -2,8 +2,11 @@ package com.hfad.bitsandpizzas.Kotlin
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.Toolbar
+import com.google.android.material.snackbar.Snackbar
 import com.hfad.bitsandpizzas.R
 import kotlinx.android.synthetic.main.activity_order.*
 
@@ -16,5 +19,14 @@ class OrderActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         val actionBar = supportActionBar as ActionBar
         actionBar.setDisplayHomeAsUpEnabled(true)
+    }
+
+    fun onClickDone(view: View) {
+        val text: CharSequence = "Your order has been updated"
+        val duration = Snackbar.LENGTH_SHORT
+        val snackbar = Snackbar.make(coordinator, text, duration)
+        snackbar.setAction("Undo") {
+            val toast = Toast.makeText(this@OrderActivity, "Undone!", Toast.LENGTH_SHORT).show()
+        }.show()
     }
 }
