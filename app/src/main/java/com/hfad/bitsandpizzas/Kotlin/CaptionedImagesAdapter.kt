@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.hfad.bitsandpizzas.R
 
-class CaptionedImagesAdapter(private val captions: Array<String>, private val imageIds: IntArray) : RecyclerView.Adapter<CaptionedImagesAdapter.ViewHolder>() {
+class CaptionedImagesAdapter(private val captions: Array<String>, private val imageIds: Array<Int>) : RecyclerView.Adapter<CaptionedImagesAdapter.ViewHolder>() {
 
     class ViewHolder(val cardView: CardView) : RecyclerView.ViewHolder(cardView)
 

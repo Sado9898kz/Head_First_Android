@@ -2,29 +2,38 @@ package com.hfad.bitsandpizzas.Kotlin
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.TextView
-import androidx.fragment.app.ListFragment
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.hfad.bitsandpizzas.Java.Pizza.pizzas
 import com.hfad.bitsandpizzas.R
 
 /**
- * A simple [ListFragment] subclass.
+ * A simple [Fragment] subclass.
  */
-class PizzaFragment : ListFragment() {
+class PizzaFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val adapter = ArrayAdapter<String>(
-                inflater.context,
-                android.R.layout.simple_list_item_1,
-                resources.getStringArray(R.array.pizzas)
-        )
-        listAdapter = adapter
-        return super.onCreateView(inflater, container, savedInstanceState)
+        val pizzaRecycler = inflater.inflate(R.layout.fragment_pizza, container, false) as RecyclerView
+
+        val pizzaNames = arrayOf<String>()
+        for (it in 0..pizzas.size) {
+            pizzaNames[it] = pizzas[it].name
+        }
+
+        val pizzasImages = arrayOf<Int>()
+        for (it in 0..pizzas.size) {
+            pizzasImages[it] = pizzas[it].imageResourceId
+        }
+
+        val adapter = CaptionedImagesAdapter(pizzaNames, pizzasImages)
+        pizzaRecycler.adapter = adapter
+        val layoutManager = GridLayoutManager(activity, 2)
+        pizzaRecycler.layoutManager = layoutManager
+        return pizzaRecycler
     }
 }
