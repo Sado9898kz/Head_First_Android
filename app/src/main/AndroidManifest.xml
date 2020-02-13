@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".Kotlin.PizzaDetailActivity"
+            android:parentActivityName=".Kotlin.MainActivity" />
+        <activity
+            android:name=".Java.PizzaDetailActivity"
+            android:parentActivityName=".Java.MainActivity" />
+        <activity
             android:name=".Kotlin.OrderActivity"
             android:label="@string/create_order"
             android:parentActivityName=".Kotlin.MainActivity">
@@ -23,7 +29,7 @@
             android:parentActivityName=".Java.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Java.MainActivity"/>
+                android:value=".Java.MainActivity" />
         </activity>
         <activity android:name=".Kotlin.MainActivity">
             <intent-filter>

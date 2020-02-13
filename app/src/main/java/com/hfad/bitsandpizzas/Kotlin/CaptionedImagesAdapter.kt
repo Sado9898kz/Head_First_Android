@@ -10,6 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hfad.bitsandpizzas.R
 
 class CaptionedImagesAdapter(private val captions: Array<String?>, private val imageIds: Array<Int?>) : RecyclerView.Adapter<CaptionedImagesAdapter.ViewHolder>() {
+    var listener: Listener? = null
+
+    interface Listener {
+        fun onClick(position: Int)
+    }
 
     class ViewHolder(val cardView: CardView) : RecyclerView.ViewHolder(cardView)
 
@@ -29,5 +34,8 @@ class CaptionedImagesAdapter(private val captions: Array<String?>, private val i
         imageView.contentDescription = captions[position]
         val textView = cardView.findViewById<TextView>(R.id.info_text)
         textView.text = captions[position]
+        cardView.setOnClickListener {
+            listener?.onClick(position)
+        }
     }
 }
