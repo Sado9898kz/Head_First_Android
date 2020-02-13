@@ -20,13 +20,13 @@ class PizzaFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val pizzaRecycler = inflater.inflate(R.layout.fragment_pizza, container, false) as RecyclerView
 
-        val pizzaNames = arrayOf<String>()
-        for (it in 0..pizzas.size) {
+        val pizzaNames = arrayOfNulls<String>(pizzas.size)
+        for (it in pizzaNames.indices) {
             pizzaNames[it] = pizzas[it].name
         }
 
-        val pizzasImages = arrayOf<Int>()
-        for (it in 0..pizzas.size) {
+        val pizzasImages = arrayOfNulls<Int>(pizzas.size)
+        for (it in pizzasImages.indices) {
             pizzasImages[it] = pizzas[it].imageResourceId
         }
 
