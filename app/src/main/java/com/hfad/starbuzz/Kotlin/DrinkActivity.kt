@@ -29,21 +29,32 @@ class DrinkActivity : AppCompatActivity() {
                 "_id = ?", arrayOf(drinkId.toString()),
                 null, null, null
             )
+
+            //Переход к первой записи в курсоре
+            if (cursor.moveToFirst()) {
+
+                //Получение данных напитка из курсора
+                val nameText = cursor.getString(0)
+                val descriptionText = cursor.getString(1)
+                val photoId = cursor.getInt(2)
+
+                //Заполнение названия напитка
+                val name = name
+                name.text = nameText
+
+                //Заполнение описания напитка
+                val description = description
+                description.text = descriptionText
+
+                //Заполнение изоброжения напитка
+                val photo = photo
+                photo.setImageResource(photoId)
+                photo.contentDescription = nameText
+            }
+            cursor.close()
+            db.close()
         } catch (e: SQLiteException) {
             Toast.makeText(this, "База данных недоступна", Toast.LENGTH_SHORT).show()
         }
-
-        //Заполнение названия напитка
-        val name = name
-        name.text = drink.name
-
-        //Заполнение описания напитка
-        val description = description
-        description.text = drink.description
-
-        //Заполнение изоброжения напитка
-        val photo = photo
-        photo.setImageResource(drink.imageResourceId)
-        photo.contentDescription = drink.name
     }
 }

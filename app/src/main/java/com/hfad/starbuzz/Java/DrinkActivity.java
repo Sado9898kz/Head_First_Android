@@ -34,22 +34,35 @@ public class DrinkActivity extends AppCompatActivity {
                     "_id = ?",
                     new String[]{Integer.toString(drinkId)},
                     null, null, null);
+
+
+            //Переход к первой записи в курсоре
+            if (cursor.moveToFirst()) {
+
+                //Получение данных напитка из курсора
+                String nameText = cursor.getString(0);
+                String descriptionText = cursor.getString(1);
+                int photoId = cursor.getInt(2);
+
+
+                //Заполнение названия напитка
+                TextView name = (TextView) findViewById(R.id.name);
+                name.setText(nameText);
+
+                //Заполнение описания напитка
+                TextView description = (TextView) findViewById(R.id.description);
+                description.setText(descriptionText);
+
+                //Заполнение изоброжения напитка
+                ImageView photo = (ImageView) findViewById(R.id.photo);
+                photo.setImageResource(photoId);
+                photo.setContentDescription(nameText);
+            }
+            cursor.close();
+            db.close();
         } catch (SQLiteException e) {
             Toast toast = Toast.makeText(this, "База данных недоступна", Toast.LENGTH_SHORT);
             toast.show();
         }
-
-        //Заполнение названия напитка
-        TextView name = (TextView) findViewById(R.id.name);
-        name.setText(drink.getName());
-
-        //Заполнение описания напитка
-        TextView description = (TextView) findViewById(R.id.description);
-        description.setText(drink.getDescription());
-
-        //Заполнение изоброжения напитка
-        ImageView photo = (ImageView) findViewById(R.id.photo);
-        photo.setImageResource(drink.getImageResourceId());
-        photo.setContentDescription(drink.getName());
     }
 }
