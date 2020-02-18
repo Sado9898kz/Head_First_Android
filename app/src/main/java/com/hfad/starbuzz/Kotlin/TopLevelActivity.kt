@@ -5,6 +5,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.os.Bundle
+import android.widget.CursorAdapter
 import android.widget.SimpleCursorAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -45,7 +46,7 @@ class TopLevelActivity : AppCompatActivity() {
             favoritesCursor = db.query(
                 "DRINK",
                 arrayOf("_id", "NAME"),
-                "FAVORITE == 1",
+                "FAVORITE = 1",
                 null, null, null, null
             )
             val favoriteAdapter = SimpleCursorAdapter(
@@ -66,6 +67,20 @@ class TopLevelActivity : AppCompatActivity() {
             intent.putExtra(DrinkActivity().EXTRA_DRINKID, id.toInt())
             startActivity(intent)
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        val newCursor = db.query(
+            "DRINK",
+            arrayOf("_id", "NAME"),
+            "FAVORITE = 1",
+            null, null, null, null
+        )
+        val listFavorites = list_favorites
+        val adapter = listFavorites.adapter as CursorAdapter
+        adapter.changeCursor(newCursor)
+        favoritesCursor = newCursor
     }
 
     //Закрытие курсора и базы данных в методе onDestroy()

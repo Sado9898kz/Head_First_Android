@@ -79,6 +79,19 @@ public class TopLevelActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Cursor newCursor = db.query("DRINK",
+                new String[]{"_id", "NAME"},
+                "FAVORITE = 1",
+                null, null, null, null);
+        ListView listFavorites = (ListView) findViewById(R.id.list_favorites);
+        CursorAdapter adapter = (CursorAdapter) listFavorites.getAdapter();
+        adapter.changeCursor(newCursor);
+        favoritesCursor = newCursor;
+    }
+
     //Закрытие курсора и базы данных в методе onDestroy()
     @Override
     protected void onDestroy() {
