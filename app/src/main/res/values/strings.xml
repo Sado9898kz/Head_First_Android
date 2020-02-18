@@ -7,4 +7,5 @@
         <item>Магазины</item>
     </string-array>
     <string name="favorite">Любимый напиток</string>
+    <string name="favorites">Ваши любимые напитки:</string>
 </resources>

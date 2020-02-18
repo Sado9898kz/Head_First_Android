@@ -1,21 +1,36 @@
 package com.hfad.starbuzz.Java;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CursorAdapter;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.hfad.starbuzz.R;
 
 public class TopLevelActivity extends AppCompatActivity {
 
+    private SQLiteDatabase db;
+    private Cursor favoritesCursor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_level);
+        setupOptionsListView();
+        setupFavoritesListView();
+    }
+
+    private void setupOptionsListView() {
         //Создать OnItemClickListener
         AdapterView.OnItemClickListener itemClickListener =
                 new AdapterView.OnItemClickListener() {
@@ -27,9 +42,48 @@ public class TopLevelActivity extends AppCompatActivity {
                         }
                     }
                 };
-
         //Добавить слушателья к списковому представлению
         ListView listView = (ListView) findViewById(R.id.list_options);
         listView.setOnItemClickListener(itemClickListener);
+    }
+
+    private void setupFavoritesListView() {
+        //Заполнение списка list_favorites из курсора
+        ListView listFavorites = (ListView) findViewById(R.id.list_favorites);
+        try {
+            SQLiteOpenHelper starbuzzDatabaseHelper = new StarbuzzDatabaseHelper(this);
+            db = starbuzzDatabaseHelper.getReadableDatabase();
+            favoritesCursor = db.query("DRINK",
+                    new String[]{"_id", "NAME"},
+                    "FAVORITE = 1",
+                    null, null, null, null);
+            CursorAdapter favoriteAdapter = new SimpleCursorAdapter(this,
+                    android.R.layout.simple_list_item_1,
+                    favoritesCursor,
+                    new String[]{"NAME"},
+                    new int[]{android.R.id.text1}, 0);
+            listFavorites.setAdapter(favoriteAdapter);
+        } catch (SQLiteException e) {
+            Toast toast = Toast.makeText(this, "База данных недоступна", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
+        //Переход к DrinkActivity при выборе напитка
+        listFavorites.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(TopLevelActivity.this, DrinkActivity.class);
+                intent.putExtra(DrinkActivity.EXTRA_DRINKID, (int) id);
+                startActivity(intent);
+            }
+        });
+    }
+
+    //Закрытие курсора и базы данных в методе onDestroy()
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        favoritesCursor.close();
+        db.close();
     }
 }
