@@ -2,6 +2,7 @@ package com.hfad.starbuzz.Kotlin
 
 import android.content.ContentValues
 import android.database.sqlite.SQLiteException
+import android.os.AsyncTask
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -67,7 +68,7 @@ class DrinkActivity : AppCompatActivity() {
 
     //Обновление базы данных по щелчку на флажке
     fun onFavoriteClicked(view: View) {
-        val drinkId = intent.extras?.get(EXTRA_DRINKID)
+        val drinkId = intent.extras?.get(EXTRA_DRINKID) as Int
 
         //Получение значения флажка
         val favorite = favorite
@@ -86,6 +87,44 @@ class DrinkActivity : AppCompatActivity() {
             )
         } catch (e: SQLiteException) {
             Toast.makeText(this, "База данных недоступна", Toast.LENGTH_SHORT).show()
+        }
+        UpdateDrinkTask().execute(drinkId)
+    }
+
+
+    //Внутренний класс для обновления напитка.
+    private inner class UpdateDrinkTask : AsyncTask<Int?, Void?, Boolean>() {
+        private var drinkValues: ContentValues? = null
+        override fun onPreExecute() {
+            //Получение значения флажка
+            val favorite = favorite
+            drinkValues = ContentValues()
+            drinkValues!!.put("FAVORITE", favorite.isChecked)
+        }
+
+        override fun doInBackground(vararg drinks: Int?): Boolean {
+            val drinkId = drinks[0]
+            //Получение ссылки на базу данных и обновление столбца FAVORITE
+            val starbuzzDatabaseHelper = StarbuzzDatabaseHelper(this@DrinkActivity)
+            return try {
+                val db = starbuzzDatabaseHelper.writableDatabase
+                db.update(
+                    "DRINK", drinkValues,
+                    "_id = ?", arrayOf(drinkId.toString())
+                )
+                db.close()
+                true
+            } catch (e: SQLiteException) {
+                false
+            }
+        }
+
+        override fun onPostExecute(success: Boolean) {
+            if (!success) {
+                val toast =
+                    Toast.makeText(this@DrinkActivity, "База данных недоступна", Toast.LENGTH_SHORT)
+                toast.show()
+            }
         }
     }
 }
